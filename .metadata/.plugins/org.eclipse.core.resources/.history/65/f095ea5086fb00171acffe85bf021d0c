@@ -1,0 +1,20 @@
+import org.apache.spark.graphx._
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkConf
+
+object  SimpleGraphX {
+        
+        def main (  args: Array[String] ) {
+                
+                val conf = new SparkConf().setAppName("Simple App")
+                val sc = new SparkContext("local",  "test", conf)
+                val graph = GraphLoader.edgeListFile(sc, "/home/qx/SaveMyDegree/cit-HepTh.txt")
+                
+                graph.vertices.take(10).foreach(println(_))
+                //val maxIntDegree = graph.inDegrees.reduce(  ( a, b) => if ( a._2 >  b._2 )  a else b ) 
+                //print(maxIntDegree)
+                //graph.vertices.collect().foreach(println(_))
+                
+        }
+        
+}

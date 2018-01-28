@@ -1,0 +1,21 @@
+import org.apache.spark.rdd.RDD
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
+import org.apache.spark.SparkConf
+import scala.io.Source
+
+
+object ReadFile {
+    
+    def main ( args: Array[String] ){
+        // read network description file from disk
+         val inputFile = Source.fromFile(raw"/home/qx/SaveMyDegree/network.txt")
+         val lines = inputFile.getLines()
+     
+         for  ( line <- lines  ) println(line)
+     
+         inputFile.close()
+    }
+    
+    
+}

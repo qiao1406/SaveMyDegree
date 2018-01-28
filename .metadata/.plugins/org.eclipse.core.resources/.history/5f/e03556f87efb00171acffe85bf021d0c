@@ -1,0 +1,8 @@
+
+object  SimpleGraphX {
+        
+        def main (  args: Array[String] ) {
+                
+        }
+        
+}

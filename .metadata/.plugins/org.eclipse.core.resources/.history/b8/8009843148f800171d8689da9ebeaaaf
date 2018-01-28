@@ -1,0 +1,23 @@
+import org.apache.spark.SparkConf  
+import org.apache.spark.SparkContext  
+import org.apache.spark.SparkContext._  
+  
+  
+object SparkTest {  
+  def main(args:Array[String]):Unit = {  
+    val conf = new SparkConf().setMaster("local").setAppName("my app")  
+    val sc = new SparkContext(conf)  
+    
+    val file = sc.textFile("/home/qx/spark/spark-2.2.0-bin-hadoop2.7/README.md")  
+    val blankLines = sc.accumulator(0)  
+    val callSigns = file.flatMap(line =>   
+      {  
+        if (line == ""){  
+          blankLines+=1  
+        }  
+        line.split(" ")  
+      })  
+      callSigns.saveAsTextFile("output.txt")  
+      println("Blank Lines:" + blankLines.value)  
+ }  
+}

@@ -1,0 +1,36 @@
+import org.apache.spark.graphx._
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkConf
+import org.apache.log4j.Logger
+import org.apache.log4j.Level
+import scala.io.Source
+
+object  SimpleGraphX {
+        
+        def readVertexFromFile ( sc: SparkContext,  fileName: String ): Array[(Long, String)] {
+                val f = Source.fromFile(fileName)
+                val lines = f.getLines
+                
+                
+                
+        }
+        
+        def main (  args: Array[String] ) {
+                
+                Logger.getLogger("org").setLevel(Level.ERROR)
+                
+                val conf = new SparkConf().setAppName("Simple App")
+                val sc = new SparkContext("local",  "test", conf)
+                val graph = GraphLoader.edgeListFile(sc, "/home/qx/SaveMyDegree/cit-HepTh.txt")
+                
+                //val v = graph.pageRank(0.001).vertices
+                //val v1 = v.reduce( (a, b) ⇒ if ( a._2 > b._2 ) a else b )
+                //print(v1)
+                //graph.vertices.take(10).foreach(println(_))
+                //val maxIntDegree = graph.inDegrees.reduce(  ( a, b) => if ( a._2 >  b._2 )  a else b ) 
+                //print(maxIntDegree)
+                //graph.vertices.collect().foreach(println(_))
+                
+        }
+        
+}
