@@ -1,0 +1,5 @@
+class IPVerticeNode (num: Long, ip: String) {
+         var nodeNum: Long = num
+         var ipAddress: String = ip
+         
+}
