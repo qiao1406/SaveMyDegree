@@ -5,20 +5,7 @@ import pickle
 #
 # 输出
 # 1) data.pkl 存储dict, key是（s_ip, d_ip, s_port, d_port）vlaue是次数
-# 2) time.pkl 存储dict，key是（s_ip, d_ip, s_port, d_port）value是这个连接出现的时间序列
-# 3） 当key相同的时候2）中的时间序列长度等于1）中对应的value
-
-
-def is_requirement_ok(d, t):
-    
-    # 判断两个字典是否符合要求
-    for key in d:
-        if key not in t:
-            return False
-        if len(t[key]) != d[key]:
-            return False
-    
-    return True
+# 2) time.pkl 存储dict，key是（s_ip, d_ip, s_port, d_port）value是这个连接出现的时间序列的字典
 
 
 def filter_file(f_name, d, t):
@@ -59,9 +46,14 @@ def filter_file(f_name, d, t):
             d[key] = 1
 
         if key in t:
-            t[key].append(link_time)
+            if link_time in t[key]:
+                t[key][link_time] += 1
+            else:
+                t[key][link_time] = 1
+
         else:
-            t[key] = [link_time]
+            t[key] = {}
+            t[key][link_time] = 1
 
     f.close()
 
@@ -75,19 +67,13 @@ for i in range(0, 1753):
     file_name = 'I:\\bh-0110-corsaro\\final-txt-\\' + str(i) + '.txt'
     filter_file(file_name, data_dict, time_dict)
 
-# 将时间序列排序
-for k in time_dict:
-    time_dict[k].sort()
+# 输出
+    
+out = open('data.pkl', 'wb')
+pickle.dump(data_dict, out)
+out.close()
 
-if is_requirement_ok(data_dict, time_dict):  # 符合条件，输出
-    
-    out = open('data.pkl', 'wb')
-    pickle.dump(data_dict, out)
-    out.close()
-    
-    out = open('time.pkl', 'wb')
-    pickle.dump(time_dict, out)
-    out.close()
-    print('解析完毕, 已正常输出')
-else:  # 不符合条件，报错
-    print('源文件解析出错，退出')
+out = open('time.pkl', 'wb')
+pickle.dump(time_dict, out)
+out.close()
+print('解析完毕, 已正常输出')
