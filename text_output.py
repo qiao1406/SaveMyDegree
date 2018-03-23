@@ -61,15 +61,15 @@ for key in time_dict:
         fe.write(key[2] + ' ' + key[3] + ' ')
         fe.write(str(len(time_seq)) + '\n')
         fe.write('#start\n')
-        count = 0
+        count = 1
         for t in time_seq:  # 一行10个
             if count >= 10:
                 fe.write(str(t) + '\n')
-                count = 0
+                count = 1
             else:
                 fe.write(str(t) + ' ')
                 count += 1
-        if count < 10:
+        if count <= 10 and count > 1:
             fe.write('\n')
         fe.write('#end\n')
 
